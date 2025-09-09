@@ -1,8 +1,8 @@
-package com.EaseTravel.travel_management_system.mapper;
+package com.EaseTravel.mapper;
 
 import org.springframework.stereotype.Component;
-import com.EaseTravel.travel_management_system.model.entity.Payment;
-import com.EaseTravel.travel_management_system.model.dto.response.BookingResponse;
+import com.EaseTravel.model.entity.Payment;
+import com.EaseTravel.model.dto.response.BookingResponse;
 
 @Component
 public class PaymentMapper {

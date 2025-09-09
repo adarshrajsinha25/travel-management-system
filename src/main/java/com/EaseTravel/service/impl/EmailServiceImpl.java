@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.service.impl;
+package com.EaseTravel.service.impl;
 
-import com.EaseTravel.travel_management_system.service.EmailService;
+import com.EaseTravel.service.EmailService;
 import org.springframework.stereotype.Service;
 
 @Service

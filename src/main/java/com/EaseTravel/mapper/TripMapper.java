@@ -1,8 +1,8 @@
-package com.EaseTravel.travel_management_system.mapper;
+package com.EaseTravel.mapper;
 
 import org.springframework.stereotype.Component;
-import com.EaseTravel.travel_management_system.model.entity.Trip;
-import com.EaseTravel.travel_management_system.model.dto.response.TripResponse;
+import com.EaseTravel.model.entity.Trip;
+import com.EaseTravel.model.dto.response.TripResponse;
 
 @Component
 public class TripMapper {

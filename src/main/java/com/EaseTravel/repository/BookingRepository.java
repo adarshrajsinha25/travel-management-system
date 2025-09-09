@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.repository;
+package com.EaseTravel.repository;
 
-import com.EaseTravel.travel_management_system.model.entity.Booking;
+import com.EaseTravel.model.entity.Booking;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {

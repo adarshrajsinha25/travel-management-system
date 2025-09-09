@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.model.entity;
+package com.EaseTravel.model.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Trip {

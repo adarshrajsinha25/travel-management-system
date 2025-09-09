@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.service;
+package com.EaseTravel.service;
 
-import com.EaseTravel.travel_management_system.model.entity.Booking;
+import com.EaseTravel.model.entity.Booking;
 import java.util.List;
 
 public interface BookingService {

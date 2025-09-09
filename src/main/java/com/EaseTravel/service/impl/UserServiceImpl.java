@@ -1,8 +1,8 @@
-package com.EaseTravel.travel_management_system.service.impl;
+package com.EaseTravel.service.impl;
 
-import com.EaseTravel.travel_management_system.model.entity.User;
-import com.EaseTravel.travel_management_system.repository.UserRepository;
-import com.EaseTravel.travel_management_system.service.UserService;
+import com.EaseTravel.model.entity.User;
+import com.EaseTravel.repository.UserRepository;
+import com.EaseTravel.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

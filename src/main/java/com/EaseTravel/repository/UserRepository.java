@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.repository;
+package com.EaseTravel.repository;
 
-import com.EaseTravel.travel_management_system.model.entity.User;
+import com.EaseTravel.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Long> {
