@@ -1,4 +1,4 @@
-package com.EaseTravel.travel_management_system.service;
+package com.EaseTravel.service;
 
 public interface NotificationService {
     void sendNotification(String to, String message);

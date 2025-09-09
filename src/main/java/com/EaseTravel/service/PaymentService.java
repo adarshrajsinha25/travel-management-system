@@ -1,6 +1,16 @@
-package com.EaseTravel.travel_management_system.service;
+package com.EaseTravel.service;
+
+import com.EaseTravel.model.entity.Payment;
+import java.util.List;
 
 public interface PaymentService {
-    // Service methods go here
-}
+    Payment createPayment(Payment payment);
 
+    Payment getPaymentById(Long id);
+
+    List<Payment> getAllPayments();
+
+    Payment updatePayment(Long id, Payment payment);
+
+    void deletePayment(Long id);
+}

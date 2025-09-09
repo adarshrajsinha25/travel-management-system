@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.service;
+package com.EaseTravel.service;
 
-import com.EaseTravel.travel_management_system.model.entity.User;
+import com.EaseTravel.model.entity.User;
 import java.util.List;
 
 public interface UserService {

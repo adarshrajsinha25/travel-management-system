@@ -1,8 +1,8 @@
 package com.EaseTravel.service.impl;
 
-import com.EaseTravel.travel_management_system.model.entity.Payment;
-import com.EaseTravel.travel_management_system.repository.PaymentRepository;
-import com.EaseTravel.travel_management_system.service.PaymentService;
+import com.EaseTravel.model.entity.Payment;
+import com.EaseTravel.repository.PaymentRepository;
+import com.EaseTravel.service.PaymentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

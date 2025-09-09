@@ -1,8 +1,8 @@
-package com.EaseTravel.travel_management_system.mapper;
+package com.EaseTravel.mapper;
 
 import org.springframework.stereotype.Component;
-import com.EaseTravel.travel_management_system.model.entity.User;
-import com.EaseTravel.travel_management_system.model.dto.response.AuthResponse;
+import com.EaseTravel.model.entity.User;
+import com.EaseTravel.model.dto.response.AuthResponse;
 
 @Component
 public class UserMapper {

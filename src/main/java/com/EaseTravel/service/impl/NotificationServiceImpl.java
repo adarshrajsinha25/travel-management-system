@@ -1,6 +1,6 @@
 package com.EaseTravel.service.impl;
 
-import com.EaseTravel.travel_management_system.service.NotificationService;
+import com.EaseTravel.service.NotificationService;
 import org.springframework.stereotype.Service;
 
 @Service

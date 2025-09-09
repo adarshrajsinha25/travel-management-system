@@ -1,6 +1,6 @@
-package com.EaseTravel.travel_management_system.repository;
+package com.EaseTravel.repository;
 
-import com.EaseTravel.travel_management_system.model.entity.Hotel;
+import com.EaseTravel.model.entity.Hotel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface HotelRepository extends JpaRepository<Hotel, Long> {

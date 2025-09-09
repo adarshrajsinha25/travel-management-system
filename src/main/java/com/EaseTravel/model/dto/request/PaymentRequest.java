@@ -1,4 +1,4 @@
-package com.EaseTravel.travel_management_system.model.dto.request;
+package com.EaseTravel.model.dto.request;
 
 public class PaymentRequest {
     private Long bookingId;

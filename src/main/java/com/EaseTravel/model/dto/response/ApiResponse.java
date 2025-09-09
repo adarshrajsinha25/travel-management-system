@@ -1,4 +1,4 @@
-package com.EaseTravel.travel_management_system.model.dto.response;
+package com.EaseTravel.model.dto.response;
 
 public class ApiResponse {
     private boolean success;
