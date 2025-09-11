@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package com.EaseTravel.security;
+=======
+package com.EaseTravel.travel_management_system.security;
+>>>>>>> e5e1446dc872be8c17f7f4032e2e61e562cf4001
 
 public class CustomUserDetails implements org.springframework.security.core.userdetails.UserDetails {
     // Custom user details implementation
