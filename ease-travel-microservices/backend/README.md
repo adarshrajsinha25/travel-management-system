@@ -76,10 +76,10 @@ cd discovery-server && mvn spring-boot:run
 cd api-gateway && mvn spring-boot:run
 
 # 3. All other services (open separate terminals)
-cd user-service        && mvn spring-boot:run
-cd trip-service        && mvn spring-boot:run
-cd booking-service     && mvn spring-boot:run
-cd payment-service     && mvn spring-boot:run
+cd user-service         && mvn spring-boot:run
+cd trip-service         && mvn spring-boot:run
+cd booking-service      && mvn spring-boot:run
+cd payment-service      && mvn spring-boot:run
 cd notification-service && mvn spring-boot:run
 ```
 
@@ -227,8 +227,9 @@ spring:
 ## 📦 Build All Services
 
 ```bash
-cd ease-travel-microservices
+cd backend
 mvn clean install -DskipTests
 ```
+
 
 
