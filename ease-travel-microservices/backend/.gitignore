@@ -1,0 +1,15 @@
+# Environment files with secrets
+.env
+
+# IDE
+.idea/
+*.iml
+.vscode/
+
+# Maven
+target/
+
+# OS
+.DS_Store
+Thumbs.db
+
