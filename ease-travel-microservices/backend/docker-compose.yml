@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # ── Eureka Discovery Server ──────────────────────────────────────────────
   discovery-server:
@@ -13,10 +11,11 @@ services:
     networks:
       - easetravel-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8761/actuator/health"]
-      interval: 20s
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health || exit 1"]
+      interval: 15s
       timeout: 10s
-      retries: 5
+      retries: 10
+      start_period: 30s
 
   # ── API Gateway ──────────────────────────────────────────────────────────
   api-gateway:
@@ -52,6 +51,10 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - JWT_SECRET=easetravel-super-secret-key-for-jwt-signing-must-be-at-least-256-bits
       - JWT_EXPIRATION=86400000
+      - DB_NAME=easetravel_users
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
     networks:
       - easetravel-network
 
@@ -69,6 +72,10 @@ services:
         condition: service_healthy
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - DB_NAME=easetravel_trips
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
     networks:
       - easetravel-network
 
@@ -86,6 +93,10 @@ services:
         condition: service_healthy
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - DB_NAME=easetravel_bookings
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
     networks:
       - easetravel-network
 
@@ -103,6 +114,10 @@ services:
         condition: service_healthy
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - DB_NAME=easetravel_payments
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
     networks:
       - easetravel-network
 
@@ -122,6 +137,10 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - SPRING_MAIL_HOST=mailhog
       - SPRING_MAIL_PORT=1025
+      - DB_NAME=easetravel_notifications
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
     networks:
       - easetravel-network
 
@@ -138,6 +157,3 @@ services:
 networks:
   easetravel-network:
     driver: bridge
-
-
-
