@@ -25,46 +25,69 @@ public class RdsDataSourceConfig {
     @Value("${DB_NAME:easetravel_notifications}")
     private String dbName;
 
+    @Value("${DB_HOST:}")
+    private String dbHost;
+
+    @Value("${DB_PORT:3306}")
+    private int dbPort;
+
+    @Value("${DB_USERNAME:}")
+    private String dbUsername;
+
+    @Value("${DB_PASSWORD:}")
+    private String dbPassword;
+
     @Bean
     @Primary
     public DataSource dataSource() {
-        try {
-            log.info("Fetching RDS credentials from AWS Secrets Manager...");
-            SecretsManagerClient client = SecretsManagerClient.builder()
-                    .region(Region.US_EAST_1)
-                    .build();
+        String host, username, password;
+        int port;
 
-            GetSecretValueResponse response = client.getSecretValue(
-                    GetSecretValueRequest.builder().secretId(secretArn).build()
-            );
+        if (dbHost != null && !dbHost.isEmpty() && dbUsername != null && !dbUsername.isEmpty()) {
+            log.info("Using direct DB credentials (DB_HOST={}, DB_PORT={}, DB_NAME={}, DB_USERNAME={})", dbHost, dbPort, dbName, dbUsername);
+            host = dbHost;
+            port = dbPort;
+            username = dbUsername;
+            password = dbPassword;
+        } else {
+            try {
+                log.info("Fetching RDS credentials from AWS Secrets Manager...");
+                SecretsManagerClient client = SecretsManagerClient.builder()
+                        .region(Region.US_EAST_1)
+                        .build();
 
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode secret = mapper.readTree(response.secretString());
+                GetSecretValueResponse response = client.getSecretValue(
+                        GetSecretValueRequest.builder().secretId(secretArn).build()
+                );
 
-            String host = secret.get("host").asText();
-            int port = secret.get("port").asInt();
-            String username = secret.get("username").asText();
-            String password = secret.get("password").asText();
+                ObjectMapper mapper = new ObjectMapper();
+                JsonNode secret = mapper.readTree(response.secretString());
 
-            String jdbcUrl = String.format(
-                    "jdbc:mysql://%s:%d/%s?useSSL=true&requireSSL=true&serverTimezone=UTC&createDatabaseIfNotExist=true",
-                    host, port, dbName
-            );
+                host = secret.get("host").asText();
+                port = secret.get("port").asInt();
+                username = secret.get("username").asText();
+                password = secret.get("password").asText();
 
-            log.info("RDS connection configured: host={}, port={}, db={}, user={}", host, port, dbName, username);
-
-            DataSourceProperties properties = new DataSourceProperties();
-            properties.setUrl(jdbcUrl);
-            properties.setUsername(username);
-            properties.setPassword(password);
-            properties.setDriverClassName("com.mysql.cj.jdbc.Driver");
-
-            client.close();
-            return properties.initializeDataSourceBuilder().build();
-        } catch (Exception e) {
-            log.error("Failed to fetch RDS credentials from Secrets Manager: {}", e.getMessage());
-            throw new RuntimeException("Cannot start application — failed to load RDS credentials from Secrets Manager", e);
+                client.close();
+            } catch (Exception e) {
+                log.error("Failed to fetch RDS credentials from Secrets Manager: {}", e.getMessage());
+                throw new RuntimeException("Cannot start application — failed to load RDS credentials from Secrets Manager", e);
+            }
         }
+
+        String jdbcUrl = String.format(
+                "jdbc:mysql://%s:%d/%s?useSSL=true&requireSSL=true&serverTimezone=UTC&createDatabaseIfNotExist=true",
+                host, port, dbName
+        );
+
+        log.info("RDS connection configured: host={}, port={}, db={}, user={}", host, port, dbName, username);
+
+        DataSourceProperties properties = new DataSourceProperties();
+        properties.setUrl(jdbcUrl);
+        properties.setUsername(username);
+        properties.setPassword(password);
+        properties.setDriverClassName("com.mysql.cj.jdbc.Driver");
+
+        return properties.initializeDataSourceBuilder().build();
     }
 }
-

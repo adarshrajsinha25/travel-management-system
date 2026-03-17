@@ -4,22 +4,16 @@ server:
 spring:
   application:
     name: notification-service
-  config:
-    import: aws-secretsmanager:${RDS_SECRET_ARN:arn:aws:secretsmanager:us-east-1:959713282924:secret:rds!db-ac3131f7-1993-4580-8828-1622ea790e84-ZF7csy}
   datasource:
-    url: jdbc:mysql://${host}:${port}/${DB_NAME:easetravel_notifications}?useSSL=true&requireSSL=true&serverTimezone=UTC&createDatabaseIfNotExist=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${username}
-    password: ${password}
+    url: jdbc:postgresql://localhost:5432/Notificationdb
+    username: postgres
+    password: Admin@123
+    driver-class-name: org.postgresql.Driver
   jpa:
-    database-platform: org.hibernate.dialect.MySQLDialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: false
-  cloud:
-    aws:
-      region:
-        static: ${AWS_REGION:us-east-1}
   # Mail config — replace with real SMTP or use MailHog for local dev
   mail:
     host: localhost

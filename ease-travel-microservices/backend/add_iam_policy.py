@@ -1,7 +1,10 @@
 import boto3
 import json
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-iam = boto3.client('iam', region_name='us-east-1')
+# Create IAM client with SSL verification disabled (corporate proxy/cert issue)
+iam = boto3.client('iam', region_name='us-east-1', verify=False)
 
 # Policy to allow Secrets Manager and RDS access
 policy_document = {
@@ -32,15 +35,28 @@ try:
         PolicyName='EaseTravelRDSSecretsAccess',
         PolicyDocument=json.dumps(policy_document)
     )
-    print("Successfully attached inline policy 'EaseTravelRDSSecretsAccess' to user 'adarshrajsinha'")
+    print("SUCCESS: Attached inline policy 'EaseTravelRDSSecretsAccess' to user 'adarshrajsinha'")
 except Exception as e:
     print(f"Failed to attach policy: {e}")
-    print("\nTrying to list user policies to see what exists...")
+    
+    # Try to get the RDS secret directly
+    print("\nTrying to get RDS secret directly...")
     try:
-        policies = iam.list_user_policies(UserName='adarshrajsinha')
-        print(f"Inline policies: {policies['PolicyNames']}")
-        attached = iam.list_attached_user_policies(UserName='adarshrajsinha')
-        print(f"Attached policies: {[p['PolicyName'] for p in attached['AttachedPolicies']]}")
+        sm = boto3.client('secretsmanager', region_name='us-east-1', verify=False)
+        response = sm.get_secret_value(SecretId='rds!db-ac3131f7-1993-4580-8828-1622ea790e84-ZF7csy')
+        secret = json.loads(response['SecretString'])
+        print(f"Host: {secret.get('host')}")
+        print(f"Port: {secret.get('port')}")
+        print(f"Username: {secret.get('username')}")
     except Exception as e2:
-        print(f"Also failed to list policies: {e2}")
-
+        print(f"Also failed: {e2}")
+        
+    # Try to describe RDS
+    print("\nTrying to describe RDS instances...")
+    try:
+        rds = boto3.client('rds', region_name='us-east-1', verify=False)
+        response = rds.describe_db_instances()
+        for db in response['DBInstances']:
+            print(f"DB: {db['DBInstanceIdentifier']}, Endpoint: {db.get('Endpoint', {}).get('Address', 'N/A')}")
+    except Exception as e3:
+        print(f"Also failed: {e3}")
