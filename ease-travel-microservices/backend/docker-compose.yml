@@ -25,7 +25,7 @@ services:
     image: easetravel/api-gateway:latest
     container_name: api-gateway
     ports:
-      - "8080:8080"
+      - "8090:8090"
     depends_on:
       discovery-server:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
       - JWT_EXPIRATION=86400000
       - DB_NAME=easetravel_users
       - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT:-3306}
+      - DB_PORT=${DB_PORT:-5432}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -78,7 +78,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - DB_NAME=easetravel_trips
       - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT:-3306}
+      - DB_PORT=${DB_PORT:-5432}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -103,7 +103,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - DB_NAME=easetravel_bookings
       - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT:-3306}
+      - DB_PORT=${DB_PORT:-5432}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -128,7 +128,7 @@ services:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
       - DB_NAME=easetravel_payments
       - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT:-3306}
+      - DB_PORT=${DB_PORT:-5432}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
@@ -155,7 +155,7 @@ services:
       - SPRING_MAIL_PORT=1025
       - DB_NAME=easetravel_notifications
       - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT:-3306}
+      - DB_PORT=${DB_PORT:-5432}
       - DB_USERNAME=${DB_USERNAME}
       - DB_PASSWORD=${DB_PASSWORD}
       - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
