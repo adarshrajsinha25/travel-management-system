@@ -1,0 +1,179 @@
+services:
+  # ── Eureka Discovery Server ──────────────────────────────────────────────
+  discovery-server:
+    build:
+      context: ./discovery-server
+      dockerfile: ../Dockerfile
+    image: easetravel/discovery-server:latest
+    container_name: discovery-server
+    ports:
+      - "8761:8761"
+    networks:
+      - easetravel-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8761/actuator/health || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+  # ── API Gateway ──────────────────────────────────────────────────────────
+  api-gateway:
+    build:
+      context: ./api-gateway
+      dockerfile: ../Dockerfile
+    image: easetravel/api-gateway:latest
+    container_name: api-gateway
+    ports:
+      - "8090:8090"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - JWT_SECRET=easetravel-super-secret-key-for-jwt-signing-must-be-at-least-256-bits
+    networks:
+      - easetravel-network
+
+  # ── User Service ─────────────────────────────────────────────────────────
+  user-service:
+    build:
+      context: ./user-service
+      dockerfile: ../Dockerfile
+    image: easetravel/user-service:latest
+    container_name: user-service
+    ports:
+      - "8081:8081"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - JWT_SECRET=easetravel-super-secret-key-for-jwt-signing-must-be-at-least-256-bits
+      - JWT_EXPIRATION=86400000
+      - DB_NAME=easetravel_users
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
+    networks:
+      - easetravel-network
+
+  # ── Trip Service ─────────────────────────────────────────────────────────
+  trip-service:
+    build:
+      context: ./trip-service
+      dockerfile: ../Dockerfile
+    image: easetravel/trip-service:latest
+    container_name: trip-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - DB_NAME=easetravel_trips
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
+    networks:
+      - easetravel-network
+
+  # ── Booking Service ──────────────────────────────────────────────────────
+  booking-service:
+    build:
+      context: ./booking-service
+      dockerfile: ../Dockerfile
+    image: easetravel/booking-service:latest
+    container_name: booking-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - DB_NAME=easetravel_bookings
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
+    networks:
+      - easetravel-network
+
+  # ── Payment Service ──────────────────────────────────────────────────────
+  payment-service:
+    build:
+      context: ./payment-service
+      dockerfile: ../Dockerfile
+    image: easetravel/payment-service:latest
+    container_name: payment-service
+    ports:
+      - "8084:8084"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - DB_NAME=easetravel_payments
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
+    networks:
+      - easetravel-network
+
+  # ── Notification Service ─────────────────────────────────────────────────
+  notification-service:
+    build:
+      context: ./notification-service
+      dockerfile: ../Dockerfile
+    image: easetravel/notification-service:latest
+    container_name: notification-service
+    ports:
+      - "8085:8085"
+    depends_on:
+      discovery-server:
+        condition: service_healthy
+    environment:
+      - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://discovery-server:8761/eureka/
+      - SPRING_MAIL_HOST=mailhog
+      - SPRING_MAIL_PORT=1025
+      - DB_NAME=easetravel_notifications
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT:-5432}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=us-east-1
+    networks:
+      - easetravel-network
+
+  # ── MailHog (local SMTP for dev) ─────────────────────────────────────────
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "1025:1025"   # SMTP
+      - "8025:8025"   # Web UI → http://localhost:8025
+    networks:
+      - easetravel-network
+
+networks:
+  easetravel-network:
+    driver: bridge
