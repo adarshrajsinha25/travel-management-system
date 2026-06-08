@@ -1,4 +1,4 @@
-# Ease Travel - Microservices Travel Management System
+# Trip Hub - Microservices Travel Management System
 
 A comprehensive microservices-based travel management platform built with Spring Boot, Spring Cloud, and React. The system provides end-to-end travel booking, management, and notification services.
 
@@ -17,7 +17,7 @@ A comprehensive microservices-based travel management platform built with Spring
 
 ## 🎯 Project Overview
 
-**Ease Travel** is a distributed travel management system that enables users to:
+**Trip Hub** is a distributed travel management system that enables users to:
 - Register and manage user accounts
 - Book trips and accommodations
 - Process payments securely
@@ -217,8 +217,8 @@ Frontend → API Gateway → Payment Service → Payment Gateway
 
 #### 1. Clone Repository
 ```bash
-git clone https://github.com/adarshrajsinha25/travel-management-system.git
-cd ease-travel-microservices
+git clone https://github.com/adarshrajsinha25/trip-hub.git
+cd trip-hub
 ```
 
 #### 2. Backend Setup
@@ -273,7 +273,7 @@ Access the application at `http://localhost:5173`
 ## 📁 Project Structure
 
 ```
-ease-travel-microservices/
+trip-hub/
 ├── backend/
 │   ├── api-gateway/              # API Gateway Service
 │   │   ├── src/
@@ -376,7 +376,7 @@ export default {
 ### Build Docker Images
 ```bash
 cd backend
-docker build -t ease-travel-services:latest .
+docker build -t trip-hub-services:latest .
 ```
 
 ### Run with Docker Compose

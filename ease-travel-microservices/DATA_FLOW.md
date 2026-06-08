@@ -1,4 +1,4 @@
-# Ease Travel - Data Flow Documentation
+# Trip Hub - Data Flow Documentation
 
 ## Complete Data Flow Diagrams
 

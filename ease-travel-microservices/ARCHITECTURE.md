@@ -1,4 +1,4 @@
-# Ease Travel - Architecture Documentation
+# Trip Hub - Architecture Documentation
 
 ## System Architecture Overview
 
