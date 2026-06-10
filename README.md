@@ -1,6 +1,25 @@
-# Trip Hub - Microservices Travel Management System
+# AtlasAI - Intelligent Travel Platform
 
-A comprehensive microservices-based travel management platform built with Spring Boot, Spring Cloud, and React. The system provides end-to-end travel booking, management, and notification services.
+**AtlasAI** is a cloud-native travel platform built using Spring Boot microservices and GenAI.
+
+## ✨ Key Features
+
+• AI-powered travel itinerary generation
+• Flight and hotel search
+• Booking and payment processing
+• Event-driven architecture using Kafka
+• Redis-based caching
+• JWT authentication and authorization
+• Containerized deployment with Docker
+
+## 🛠️ Tech Stack
+
+**Backend:** Spring Boot (Microservices)
+**Frontend:** React
+**AI Services:** FastAPI
+**Message Queue:** Apache Kafka
+**Caching:** Redis
+**Containerization:** Docker
 
 ## 📋 Table of Contents
 
