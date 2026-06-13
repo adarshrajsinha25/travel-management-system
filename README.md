@@ -1,6 +1,6 @@
 # AtlasAI - Intelligent Travel Platform
 
-**AtlasAI** is a cloud-native travel platform built using Spring Boot microservices and GenAI.
+**AtlasAI** transforms travel planning through AI-powered itinerary recommendations and a scalable microservices architecture. The platform integrates booking, payments, notifications, caching, and secure authentication into a unified travel ecosystem. Built with Spring Boot, React, Kafka, Redis, and Docker to support modern cloud-native deployment patterns.
 
 ## ✨ Key Features
 
