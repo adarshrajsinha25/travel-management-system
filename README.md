@@ -36,7 +36,7 @@
 
 ## 🎯 Project Overview
 
-**Trip Hub** is a distributed travel management system that enables users to:
+**AtlasAi** is a distributed travel management system that enables users to:
 - Register and manage user accounts
 - Book trips and accommodations
 - Process payments securely
